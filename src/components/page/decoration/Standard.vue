@@ -1,8 +1,10 @@
 <template>
     <div>
         <div class="crumbs container">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 规格</el-breadcrumb-item>
+            <el-breadcrumb separator=">">
+                <el-breadcrumb-item :to="{ path: '/' }"><i class="el-icon-lx-cascades"></i> 首页</el-breadcrumb-item>
+                <el-breadcrumb-item>材料管理</el-breadcrumb-item>
+                <el-breadcrumb-item>主材规格</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
