@@ -44,29 +44,29 @@
                         index: 'dashboard',
                         title: '系统首页'
                     },
-                    {
-                        icon: 'el-icon-lx-settings',
-                        index: '1',
-                        title: '系统管理',
-                        subs: [
-                            {
-                                index: 'user_mgt',
-                                title: '人员管理'
-                            },
-                            {
-                                index: 'role_mgt',
-                                title: '角色管理'
-                            },
-                            {
-                                index: 'resource_mgt',
-                                title: '菜单管理'
-                            },
-                            {
-                                index:'log_mgt',
-                                title:'系统日志'
-                            }
-                        ]
-                    },
+                    // {
+                    //     icon: 'el-icon-lx-settings',
+                    //     index: '1',
+                    //     title: '系统管理',
+                    //     subs: [
+                    //         {
+                    //             index: 'user_mgt',
+                    //             title: '人员管理'
+                    //         },
+                    //         {
+                    //             index: 'role_mgt',
+                    //             title: '角色管理'
+                    //         },
+                    //         {
+                    //             index: 'resource_mgt',
+                    //             title: '菜单管理'
+                    //         },
+                    //         {
+                    //             index:'log_mgt',
+                    //             title:'系统日志'
+                    //         }
+                    //     ]
+                    // },
                     {
                         icon: 'el-icon-lx-sort',
                         index: '2',
@@ -90,6 +90,11 @@
                         icon: 'el-icon-lx-service',
                         index: 'project',
                         title: '工地管理'
+                    },
+                    {
+                        icon: 'el-icon-lx-edit',
+                        index: 'new_project',
+                        title: '创建工地'
                     }
                 ]
             }

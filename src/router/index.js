@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/dashboard'
+            redirect: '/new_project'
         },
         {
             path: '/',
@@ -45,6 +45,11 @@ export default new Router({
                     meta: {title:'主材维护'}
                 },
                 {
+                    path: '/material_item',
+                    component: resolve => require(['../components/page/decoration/MaterialItem.vue'], resolve),
+                    meta: {title:'主材型号'}
+                },
+                {
                     path: '/standard',
                     component: resolve => require(['../components/page/decoration/Standard.vue'], resolve),
                     meta: {title:'主材规格'}
@@ -58,6 +63,11 @@ export default new Router({
                     path: '/project',
                     component: resolve => require(['../components/page/decoration/Project.vue'], resolve),
                     meta: {title:'工地管理'}
+                },
+                {
+                    path: '/new_project',
+                    component: resolve => require(['../components/page/decoration/NewProject.vue'], resolve),
+                    meta: {title:'创建管理'}
                 },
                 {
                     path: '/404',

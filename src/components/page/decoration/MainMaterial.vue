@@ -27,7 +27,7 @@
 
 <script>
     export default {
-        data: function () {
+        data() {
             return {
                 materials: []
             }
@@ -37,7 +37,7 @@
             this.getData();
         },
         methods: {
-            getData: function () {
+            getData() {
                 const that = this;
                 this.$axios.get('/api/decoration/material/list')
                     .then(function (response) {
@@ -47,8 +47,14 @@
                         console.log(error);
                     })
             },
-            redirect2Items: function (index) {
-                alert(JSON.stringify(this.materials[index]));
+            redirect2Items(index) {
+                this.$router.push({
+                    path: '/material_item',
+                    query: {
+                        mainId: this.materials[index].id,
+                        mainName: this.materials[index].name
+                    }
+                });
             }
         }
     }

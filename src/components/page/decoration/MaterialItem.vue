@@ -4,32 +4,44 @@
             <el-breadcrumb separator=">">
                 <el-breadcrumb-item :to="{ path: '/' }"><i class="el-icon-lx-cascades"></i> 首页</el-breadcrumb-item>
                 <el-breadcrumb-item>材料管理</el-breadcrumb-item>
-                <el-breadcrumb-item>主材规格</el-breadcrumb-item>
+                <el-breadcrumb-item>主材管理</el-breadcrumb-item>
+                <el-breadcrumb-item>{{mainName}}</el-breadcrumb-item>
+                <el-breadcrumb-item>型号</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-form :inline="true" :model="requestParam">
-                    <el-form-item label="规格">
-                        <el-input v-model="requestParam.name" placeholder="规格"></el-input>
-                    </el-form-item>
-                    <el-form-item label="状态">
-                        <el-select v-model="requestParam.status" placeholder="规格状态">
-                            <el-option label="全部" value="-999">全部</el-option>
-                            <el-option label='有效' value="1">有效</el-option>
-                            <el-option label="无效" value="0">无效</el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="query">查询</el-button>
-                        <el-button type="success" @click="handleAdd">新增</el-button>
-                    </el-form-item>
-                </el-form>
+                <div class="handle-box">
+                    <el-form :inline="true" :model="requestParam">
+                        <el-form-item label="型号品牌">
+                            <el-input v-model="requestParam.brand" placeholder="品牌"></el-input>
+                        </el-form-item>
+                        <el-form-item label="型号名称">
+                            <el-input v-model="requestParam.modelName" placeholder="名称"></el-input>
+                        </el-form-item>
+                        <el-form-item label="状态">
+                            <el-select v-model="requestParam.status" placeholder="规格状态">
+                                <el-option label="全部" value="-999">全部</el-option>
+                                <el-option label='有效' value="1">有效</el-option>
+                                <el-option label="无效" value="0">无效</el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="query">查询</el-button>
+                            <el-button type="success" @click="handleAdd">新增</el-button>
+                            <el-button type="default" @click="back">返回</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
             </div>
             <el-table :data="tableData" border class="table" v-loading="loading">
-                <el-table-column prop="name" label="规格" sortable>
+                <el-table-column prop="brand" label="品牌">
                 </el-table-column>
-                <el-table-column prop="remark" label="备注">
+                <el-table-column prop="modelName" label="型号">
+                </el-table-column>
+                <el-table-column prop="modelRemark" label="型号备注">
+                </el-table-column>
+                <el-table-column prop="standard" label="规格">
                 </el-table-column>
                 <el-table-column prop="tag" label="状态">
                     <template slot-scope="scope">
@@ -62,11 +74,18 @@
                 </el-pagination>
             </div>
         </div>
+
         <!-- form弹出框 -->
-        <el-dialog :title="formTitle" :visible.sync="formVisible" width="30%">
+        <el-dialog :title="formTitle" :visible.sync="formVisible" width="40%">
             <el-form ref="formModal" :model="formModal" label-width="50px">
+                <el-form-item label="品牌">
+                    <el-input v-model="formModal.brand" placeholder="请输入品牌"></el-input>
+                </el-form-item>
+                <el-form-item label="型号">
+                    <el-input v-model="formModal.modelName" placeholder="请输入型号"></el-input>
+                </el-form-item>
                 <el-form-item label="规格">
-                    <el-input v-model="formModal.name" placeholder="请输入规格"></el-input>
+                    <el-input v-model="formModal.standard" placeholder="请输入规格"></el-input>
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-select v-model="formModal.status" style="width: 100%;">
@@ -75,7 +94,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="备注">
-                    <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="formModal.remark"></el-input>
+                    <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="formModal.modelRemark"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -89,9 +108,10 @@
 
 <script>
     export default {
-        name: 'standard',
+        name: 'material_item',
         data() {
             return {
+                mainName:'',
                 pageProp: {
                     totalCount: 0,
                     pageCount: 0,
@@ -99,7 +119,9 @@
                 },
                 loading: true,
                 requestParam: {
-                    name: '',
+                    mainId:'',
+                    brand:'',
+                    modelName: '',
                     status: '-999',
                     currentPage: 1,
                     pageSize: 20
@@ -107,9 +129,11 @@
                 tableData: [],
                 formModal: {
                     id: '',
-                    name: '',
+                    brand:'',
+                    modelName: '',
+                    standard:'',
                     status: '1',
-                    remark: ''
+                    modelRemark: ''
                 },
                 formVisible: false,
                 formTitle: '添加',
@@ -117,9 +141,19 @@
             }
         },
         created() {
+            const mainId = this.$route.query.mainId;
+            const mainName = this.$route.query.mainName;
+            this.requestParam.mainId = mainId;
+            this.mainName = mainName;
+        },
+        mounted(){
             this.query();
         },
-        computed: {},
+        watch: {
+            '$route' (to, from) {
+                this.$router.go(0);
+            }
+        },
         methods: {
             handleSizeChange(val) {
                 this.requestParam.pageSize = val;
@@ -129,9 +163,12 @@
                 this.requestParam.currentPage = val;
                 this.query();
             },
-            query() {
+            back(){
+                this.$router.go(-1);
+            },
+            query(){
                 this.loading = true;
-                this.$axios.post('/api/decoration/standard', this.requestParam).then((res) => {
+                this.$axios.post('/api/decoration/material_item', this.requestParam).then((res) => {
                     this.loading = false;
                     this.tableData = res.data.data.list;
                     this.requestParam.currentPage = res.data.data.currentPage;
@@ -139,31 +176,35 @@
                     this.pageProp.totalCount = res.data.data.totalCount;
                 })
             },
-            handleEdit(index) {
-                this.formTitle = '编辑';
-                const item = this.tableData[index];
-                this.formModal = {
-                    id:item.id,
-                    name: item.name,
-                    status: item.status + '',
-                    remark: item.remark
-                };
-                this.formVisible = true;
-            },
             handleAdd() {
                 this.formTitle = '增加';
                 this.formModal = {
                     id: '-999',
-                    name: '',
+                    brand:'',
+                    modelName: '',
+                    standard:'',
                     status: '1',
-                    remark: ''
+                    modelRemark: ''
+                };
+                this.formVisible = true;
+            },
+            handleEdit(index) {
+                this.formTitle = '型号编辑';
+                const item = this.tableData[index];
+                this.formModal = {
+                    id:item.id,
+                    brand:item.brand,
+                    modelName: item.modelName,
+                    standard:item.standard,
+                    status: item.status + '',
+                    modelRemark: item.modelRemark
                 };
                 this.formVisible = true;
             },
             handleDelete(index) {
                 const item = this.tableData[index];
                 this.optId = item.id;
-                this.$confirm('此操作将永久删除该规格, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除该型号, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
