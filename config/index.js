@@ -11,11 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
-          target: 'http://coder.decoration.com:8181',//设置你调用的接口域名和端口号 别忘了加http
+      '/decoration':{
+          target: 'http://decoration.coder.com:8181',//设置你调用的接口域名和端口号 别忘了加http
           changeOrigin: true,
           pathRewrite: {
-              '^/api': ''
+              '^/decoration': ''
           }
       },
       '/ms':{

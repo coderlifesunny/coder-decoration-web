@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/new_project'
+            redirect: '/dashboard'
         },
         {
             path: '/',

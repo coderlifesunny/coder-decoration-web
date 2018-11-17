@@ -39,7 +39,7 @@
         methods: {
             getData() {
                 const that = this;
-                this.$axios.get('/api/decoration/material/list')
+                this.$axios.get('/decoration/material/list')
                     .then(function (response) {
                         that.materials = response.data.data;
                     })

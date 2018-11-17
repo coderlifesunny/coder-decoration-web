@@ -131,7 +131,7 @@
             },
             query() {
                 this.loading = true;
-                this.$axios.post('/api/decoration/standard', this.requestParam).then((res) => {
+                this.$axios.post('/decoration/standard', this.requestParam).then((res) => {
                     this.loading = false;
                     this.tableData = res.data.data.list;
                     this.requestParam.currentPage = res.data.data.currentPage;
@@ -172,7 +172,7 @@
                 });
             },
             saveEvt() {
-                let url = this.formTitle === '增加' ? '/api/decoration/standard/add' : '/api/decoration/standard/modify';
+                let url = this.formTitle === '增加' ? '/decoration/standard/add' : '/decoration/standard/modify';
                 this.$axios.post(url, this.formModal).then((res) => {
                     if(res.data.code === '2000'){
                         this.$message.success('保存成功');
@@ -186,7 +186,7 @@
                 });
             },
             deleteEvt() {
-                this.$axios.post('/api/decoration/standard/delete', {id: this.optId}).then((res) => {
+                this.$axios.post('/decoration/standard/delete', {id: this.optId}).then((res) => {
                     if(res.data.code==='2000'){
                         this.$message.success('删除成功');
                         this.query();

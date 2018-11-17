@@ -23,7 +23,6 @@
                     <el-progress :percentage="24.1" color="#f1e05a"></el-progress>
                     李丽
                     <el-progress :percentage="3.7"></el-progress>
-
                     其他
                     <el-progress :percentage="0.9" color="#f56c6c"></el-progress>
                 </el-card>
@@ -195,6 +194,7 @@
         created(){
             this.handleListener();
             this.changeDate();
+            console.log("cookie:"+this.getCookie("wolfking.jeesite.session.id"));
         },
         activated(){
             this.handleListener();
@@ -204,6 +204,20 @@
             bus.$off('collapse', this.handleBus);
         },
         methods: {
+            getCookie(c_name){
+                if (document.cookie.length>0)
+                {
+                    var c_start=document.cookie.indexOf(c_name + "=");
+                    if (c_start!=-1)
+                    {
+                        c_start=c_start + c_name.length+1 ;
+                        var c_end=document.cookie.indexOf(";",c_start);
+                        if (c_end==-1) c_end=document.cookie.length;
+                        return unescape(document.cookie.substring(c_start,c_end));
+                    }
+                }
+                return "";
+            },
             changeDate(){
                 const now = new Date().getTime();
                 this.data.forEach((item, index) => {

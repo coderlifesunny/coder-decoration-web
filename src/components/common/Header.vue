@@ -30,6 +30,7 @@
                         {{username}} <i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>修改密码</el-dropdown-item>
                         <el-dropdown-item command="loginout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -107,7 +108,7 @@
         position: relative;
         box-sizing: border-box;
         width: 100%;
-        height: 70px;
+        height: 60px;
         font-size: 22px;
         color: #fff;
     }
@@ -115,20 +116,20 @@
         float: left;
         padding: 0 21px;
         cursor: pointer;
-        line-height: 70px;
+        line-height: 60px;
     }
     .header .logo{
         float: left;
         width:350px;
-        line-height: 70px;
+        line-height: 60px;
     }
     .header-right{
         float: right;
-        padding-right: 50px;
+        padding-right: 30px;
     }
     .header-user-con{
         display: flex;
-        height: 70px;
+        height: 60px;
         align-items: center;
     }
     .btn-fullscreen{

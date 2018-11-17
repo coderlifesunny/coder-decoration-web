@@ -2,6 +2,16 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import axios from 'axios';
+// if (location.hostname === 'localhost') {
+//     axios.defaults.baseURL = process.env.API_PATH_DEV
+// } else if (location.hostname === 'coder.decoration.com') {
+//     axios.defaults.baseURL = process.env.API_PATH_DEV
+// } else if (location.hostname === 'coder.decoration.com') {
+//     axios.defaults.baseURL = process.env.API_PATH_TEST
+// } else if (location.hostname === 'coder.decoration.com') {
+//     axios.defaults.baseURL = process.env.API_PATH_PROD
+// }
+axios.defaults.baseURL = process.env.API_PATH_DEV;
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';    // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
